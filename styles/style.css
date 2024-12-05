@@ -13,6 +13,7 @@
   --c-placeholder:#333333; /* Donkergrijs, voor placeholders */
   --c-error: #721c24; /* Rood, voor foutmeldingen */
   --c-success: #155724; /* Groen, voor succesmeldingen */
+  --br-clr:#f3c6c6;
   
   
    /* ==== Typografie ==== */
@@ -88,7 +89,7 @@
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  border-right: 0.125rem solid #f3c6c6;
+  border-right: 0.125rem solid var( --br-clr);
 }
 
 .info-card p {
@@ -259,4 +260,61 @@ button {
 button:hover {
   background-color: var(--c-primary);
   box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+
+/* Alleen voor mobiele apparaten */
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column; 
+    width: 100%; 
+    margin: 0 auto; 
+  }
+
+  /* Zorg ervoor dat de volgorde wordt aangepast */
+  .contact-form {
+    order: 1; /* Zet het contactformulier bovenaan */
+    padding: 1.5rem; 
+  }
+
+  .info-card {
+    order: 2; /* Zet de informatiekaart onderaan */
+    border-right: none; 
+    border-top: 0.125rem solid var( --br-clr);
+    text-align: left;
+    padding: 1.5rem 1rem;
+  }
+
+  /* Contactinformatie styling */
+  .info-card h1 {
+    display: none; /* Verberg de grote kop in de mobiele versie */
+  }
+
+  .info-card p {
+    font-size: 0.875rem; 
+    margin-bottom: 0.5rem;
+    line-height: var(--fs-h3)
+  }
+
+  /* Knop voor e-mailadressen aanpassen */
+  .info-card button {
+    width: 100%; 
+    font-size: 0.875rem; 
+    padding: 0.5rem;
+    margin: 1.5rem 0; 
+  }
+
+  /* scheiding tussen secties */
+  .contact-form {
+    border-bottom: 0.125rem solid var( --br-clr); /* Voeg een scheiding toe onder het formulier */
+  }
+
+  /*  styling */
+  button {
+    margin-bottom: 1.5rem; 
+  }
 }
