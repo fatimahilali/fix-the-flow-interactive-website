@@ -11,7 +11,7 @@
   --c-accent: #E85340; /* Rood, voor knoppen en accenten */
   --c-text: #FFFFFF; /* Wit, voor tekst op donkere achtergronden */
   --c-placeholder:#333333; /* Donkergrijs, voor placeholders */
-  --c-error: #721c24; /* Rood, voor foutmeldingen */
+  --c-error: #d8091e; /* Rood, voor foutmeldingen */
   --c-success: #155724; /* Groen, voor succesmeldingen */
   --br-clr:#f3c6c6;
   
@@ -152,6 +152,9 @@
   font-size: var(--fs-body); 
   line-height: var(--lh-body);
   color: var(--c-primary); 
+  display: flex;
+  flex-direction: column;
+
 }
 
 /* Stijl voor e-mailkoppelingen */
@@ -215,6 +218,7 @@
   color: var(--c-placeholder);
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 
+
   /* Animatie toevoegen */
   background-size: 200% 200%; 
   animation: gradientShift 6s infinite ease-in-out; 
@@ -245,6 +249,68 @@
 }
 
 
+input:invalid, textarea:invalid {
+  border-color:var(--c-error);
+}
+
+input:valid, textarea:valid {
+  border-color: green;
+}
+
+
+/* input stijl voor foutmeldingen */
+.error-message {
+  background: transparent;
+  border-left: 0.25rem solid var(--c-accent); 
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--c-error, red); 
+  display: block; 
+  animation: fadeIn 0.3s ease-in-out; 
+}
+
+
+/* Pictogramstijl voor foutmeldingen */
+.error-message::before {
+  content: "⚠️"; 
+  font-size: 1em; 
+  color: var(--c-accent); 
+}
+
+/* Animatie voor fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Start onzichtbaar */
+    transform: translateY(-0.25rem); /* Beweeg een beetje naar boven */
+  }
+  to {
+    opacity: 1; /* Volledig zichtbaar */
+    transform: translateY(0); /* Terug naar oorspronkelijke positie */
+  }
+}
+
+
+
+/* Stijl voor invoervelden met fouten */
+input.error,
+textarea.error,
+select.error {
+  border-color: var(--c-accent, red); /* Rode rand voor foutveld */
+  box-shadow: 0 0 0.125rem rgba(232, 83, 64, 0.5); /* Subtiele schaduw */
+}
+
+input.error:focus,
+textarea.error:focus,
+select.error:focus {
+  outline: none; /* Geen standaard blauwe rand */
+  box-shadow: 0 0 0.25rem rgba(232, 83, 64, 0.5); /* Vergroot de schaduw bij focus */
+}
+  
+
+/* Standaardstijl voor de knop */
 button {
   margin-top: 1.25rem;
   background-color: var(--c-accent);
@@ -255,6 +321,7 @@ button {
   font-size: var(--fs-body);
   cursor: pointer;
   box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 button:hover {
@@ -263,6 +330,45 @@ button:hover {
 }
 
 
+
+/* Stijl voor de foutmelding van verzending */
+
+/* Algemene stijl voor feedbackmeldingen */
+.feedback {
+  display: none; 
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem; 
+  font-size: var(--fs-body, 1rem);
+  text-align: center;
+  backdrop-filter: blur(5px); 
+  border: 1px solid transparent;
+  animation: fadeIn 0.5s ease-in-out forwards; 
+}
+
+/* Specifieke stijl voor succesmeldingen */
+.feedback.success {
+  color: var(--c-success, #155724);
+  border-color: rgba(21, 87, 36, 0.2);
+}
+
+/* Specifieke stijl voor foutmeldingen */
+.feedback.error {
+  color: var(--c-error);
+  border-color: rgba(114, 28, 36, 0.2);
+}
+
+/* Fade-in animatie definitie */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
 
@@ -310,7 +416,7 @@ button:hover {
 
   /* scheiding tussen secties */
   .contact-form {
-    border-bottom: 0.125rem solid var( --br-clr); /* Voeg een scheiding toe onder het formulier */
+    border-bottom: 0.125rem solid var( --br-clr); 
   }
 
   /*  styling */
