@@ -265,7 +265,7 @@ input:valid, textarea:valid {
   border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
   margin-top: 0.25rem;
-  font-size: 0.75rem;
+  font-size: var(--fs-body);
   font-weight: bold;
   color: var(--c-error, red); 
   display: block; 

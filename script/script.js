@@ -20,108 +20,143 @@
 
 
 
-
 // ==================== Implementatie Code ====================
+
 
 // Wacht tot de DOM volledig geladen is voordat je scripts uitvoert
 document.addEventListener("DOMContentLoaded", () => {
-
+  
   // Zoek de knop en het e-maildetails element in de HTML
-  const toggleButton = document.getElementById("toggle-emails");
-  const emailDetails = document.getElementById("email-details");
+  const toggleButton = document.getElementById("toggle-emails"); // Zoek de knop waarmee je e-maildetails kunt tonen/verbergen
+  const emailDetails = document.getElementById("email-details"); // Zoek het gedeelte waar de e-maildetails staan
 
   // [Micro-interactie 1] Verberg standaard e-maildetails en toon/verberg bij klikken
   if (toggleButton && emailDetails) {
-    // Voeg de CSS-klasse 'hidden' toe om e-maildetails te verbergen
+    // Verberg de e-maildetails standaard door de CSS-klasse 'hidden' toe te voegen
     emailDetails.classList.add("hidden");
 
-    // Voeg een klikgebeurtenis toe aan de knop
+    // Voeg een klikgebeurtenis toe aan de knop zodat de gebruiker kan wisselen tussen tonen/verbergen
     toggleButton.addEventListener("click", () => {
-      // Wissel tussen tonen en verbergen door de 'hidden'-klasse aan/uit te zetten
+      // Wissel de zichtbaarheid van e-maildetails door de 'hidden'-klasse aan of uit te zetten
       emailDetails.classList.toggle("hidden");
     });
   }
 
-  // Zoek het formulier in de HTML
+  // Zoek het formulier in de HTML om ermee te werken
   const form = document.querySelector("form");
   if (form) {
-    // Voeg een gebeurtenis toe die wordt uitgevoerd als het formulier wordt verstuurd
-    form.addEventListener("submit", (event) => {
-      // Voorkom dat de browser de pagina opnieuw laadt
-      event.preventDefault();
+    // Zoek de individuele velden en het feedback-element
+    const nameField = document.getElementById("name"); // Naamveld
+    const emailField = document.getElementById("email"); // E-mailveld
+    const topicField = document.getElementById("topic"); // Onderwerpveld (dropdown)
+    const messageField = document.getElementById("message"); // Berichtveld
+    const feedback = document.getElementById("form-feedback"); // Feedbackruimte voor algemene berichten
 
-      // Reset eventuele fouten of foutmeldingen van een eerdere poging
+    // Stel de validatieregels in voor elk veld
+    const validations = [
+      {
+        field: nameField, // Het veld dat we controleren
+        validate: value => /^[a-zA-Z\s]+$/.test(value), // Controleer of de naam alleen letters en spaties bevat
+        errorMessage: "Naam mag alleen letters en spaties bevatten." // Foutmelding als het niet geldig is
+      },
+      {
+        field: emailField, // Het e-mailveld
+        validate: value => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value), // Controleer of de e-mail een geldig formaat heeft
+        errorMessage: "Voer een geldig e-mailadres in (bijv. john@hotmail.com)." // Foutmelding als het niet geldig is
+      },
+      {
+        field: topicField, // Het dropdown-onderwerpveld
+        validate: value => value !== "", // Controleer of een onderwerp is geselecteerd
+        errorMessage: "Selecteer een onderwerp." // Foutmelding als er geen keuze is gemaakt
+      },
+      {
+        field: messageField, // Het tekstveld voor het bericht
+        validate: value => value.trim() !== "", // Controleer of het bericht niet leeg is
+        errorMessage: "Bericht mag niet leeg zijn." // Foutmelding als er niets is ingevuld
+      }
+    ];
+
+    // Voeg validatie toe bij het verlaten van een veld (blur)
+    validations.forEach(({ field, validate, errorMessage }) => {
+      // Controleer het veld als de gebruiker het verlaat
+      field.addEventListener("blur", () => {
+        validateField(field, validate, errorMessage);
+      });
+
+      // Tijdens het typen controleer je of de fout al opgelost is
+      field.addEventListener("input", () => {
+        if (validate(field.value.trim())) {
+          clearError(field); // Haal de foutmelding weg als het nu geldig is
+        }
+      });
+    });
+
+    // Verwerk het formulier als de gebruiker het probeert in te sturen
+    form.addEventListener("submit", (event) => {
+      event.preventDefault(); // Voorkom standaard formulierverzending
+
+      // Reset eventuele oude fouten en foutmeldingen
       resetErrors();
 
-      // Zoek de velden in het formulier
-      const nameField = document.getElementById("name");
-      const emailField = document.getElementById("email");
-      const topicField = document.getElementById("topic");
-      const messageField = document.getElementById("message");
-      const feedback = document.getElementById("form-feedback");
+      let isValid = true; // Houd bij of alle velden geldig zijn
 
-      let isValid = true; // Houd bij of alle velden correct zijn ingevuld
+      // Controleer elk veld opnieuw
+      validations.forEach(({ field, validate, errorMessage }) => {
+        if (!validate(field.value.trim())) {
+          showError(field, errorMessage); // Toon een fout als het veld ongeldig is
+          isValid = false; // Markeer het formulier als ongeldig
+        }
+      });
 
-      // Controleer of de naam alleen letters en spaties bevat
-      if (!/^[a-zA-Z\s]+$/.test(nameField.value.trim())) {
-        showError(nameField, "Naam mag alleen letters en spaties bevatten.");
-        isValid = false; // Zet formulierstatus op ongeldig
-      }
-
-      // Controleer of het e-mailadres geldig is
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailField.value.trim())) {
-        showError(emailField, "Voer een geldig e-mailadres in (bijv. john@hotmail.com).");
-        isValid = false;
-      }
-
-      // Controleer of er een onderwerp is geselecteerd
-      if (topicField.value === "") {
-        showError(topicField, "Selecteer een onderwerp.");
-        isValid = false;
-      }
-
-      // Controleer of het bericht niet leeg is
-      if (messageField.value.trim() === "") {
-        showError(messageField, "Bericht mag niet leeg zijn.");
-        isValid = false;
-      }
-
-      // Als alle velden geldig zijn, laat een succesbericht zien en reset het formulier
+      // Laat een succes- of foutbericht zien afhankelijk van de validatie
       if (isValid) {
-        showFeedback(feedback, "Formulier succesvol verzonden!", "success");
+        showFeedback(feedback, "Formulier succesvol verzonden!", "success"); // Succesbericht
         form.reset(); // Maak alle velden leeg
-        // Verberg het feedbackbericht na 5 seconden
-        setTimeout(() => (feedback.style.display = "none"), 5000);
+        setTimeout(() => (feedback.style.display = "none"), 5000); // Verberg het succesbericht na 5 seconden
       } else {
-        // Als er fouten zijn, laat een foutmelding zien
-        showFeedback(feedback, "Controleer de gemarkeerde velden en probeer opnieuw.", "error");
+        showFeedback(feedback, "Controleer de gemarkeerde velden en probeer opnieuw.", "error"); // Foutbericht
       }
     });
   }
 
-  // Functie om alle foutmeldingen en foutstijlen te verwijderen
-  const resetErrors = () => {
-    // Verwijder alle foutmeldingen die eerder zijn toegevoegd
-    document.querySelectorAll(".error-message").forEach(el => el.remove());
-    // Verwijder de rode foutstijl van de velden
-    document.querySelectorAll(".error").forEach(el => el.classList.remove("error"));
+  // Functie om een veld te controleren
+  const validateField = (input, validationFunction, errorMessage) => {
+    if (!validationFunction(input.value.trim())) {
+      // Als het niet geldig is, toon een fout
+      showError(input, errorMessage);
+    } else {
+      // Haal de foutmelding weg als het nu geldig is
+      clearError(input);
+    }
   };
 
-  // Functie om een foutmelding bij een specifiek veld weer te geven
+  // Functie om alle fouten in één keer te verwijderen
+  const resetErrors = () => {
+    document.querySelectorAll(".error-message").forEach(el => el.remove()); // Verwijder foutberichten
+    document.querySelectorAll(".error").forEach(el => el.classList.remove("error")); // Verwijder foutstijl
+  };
+
+  // Functie om een specifieke foutmelding bij een veld te tonen
   const showError = (input, message) => {
-    // Voeg een rode rand toe aan het veld
-    input.classList.add("error");
-    // Voeg een foutmelding toe naast het veld als die nog niet bestaat
+    input.classList.add("error"); // Voeg een foutstijl toe aan het veld
     if (!input.nextElementSibling?.classList.contains("error-message")) {
+      // Voeg een foutbericht toe als het nog niet bestaat
       input.insertAdjacentHTML("afterend", `<span class="error-message" role="alert">${message}</span>`);
     }
   };
 
-  // Functie om een algemeen feedbackbericht (succes of fout) weer te geven
-  const showFeedback = (feedback, message, type) => {
-    feedback.textContent = message; // Zet de tekst van het bericht
-    feedback.className = `feedback ${type}`; // Voeg de juiste CSS-klasse toe (success of error)
-    feedback.style.display = "block"; // Maak het bericht zichtbaar
+  // Functie om een foutmelding bij een veld te verwijderen
+  const clearError = (input) => {
+    input.classList.remove("error"); // Verwijder de foutstijl
+    if (input.nextElementSibling?.classList.contains("error-message")) {
+      input.nextElementSibling.remove(); // Verwijder het foutbericht
+    }
   };
 
+  // Functie om een algemene feedbackboodschap te tonen (bijv. succes of fout)
+  const showFeedback = (feedback, message, type) => {
+    feedback.textContent = message; // Zet de tekst van het bericht
+    feedback.className = `feedback ${type}`; // Pas de stijl aan op basis van het type (success/error)
+    feedback.style.display = "block"; // Maak het zichtbaar
+  };
 });
