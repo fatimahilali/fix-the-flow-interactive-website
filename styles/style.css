@@ -240,6 +240,19 @@
 }
 
 
+legend {
+  position: absolute;
+  height: 0.0625rem; 
+  width: 0.0625rem; 
+  overflow: hidden;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
@@ -424,3 +437,5 @@ button:hover {
     margin-bottom: 1.5rem; 
   }
 }
+
+

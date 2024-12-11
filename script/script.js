@@ -20,7 +20,9 @@
 
 
 
+
 // ==================== Implementatie Code ====================
+
 
 
 // Wacht tot de DOM volledig geladen is voordat je scripts uitvoert
@@ -160,3 +162,5 @@ document.addEventListener("DOMContentLoaded", () => {
     feedback.style.display = "block"; // Maak het zichtbaar
   };
 });
+
+
