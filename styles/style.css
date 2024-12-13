@@ -383,6 +383,33 @@ button:hover {
   }
 }
 
+/* Stijl voor de virtuele muis */
+
+.virtual-mouse {
+  position: absolute;
+  width: 2.5em;
+  height: 2.5em;
+  pointer-events: none;
+  z-index: 1000;
+  display: none;
+  transform-origin: center;
+  animation: mouse-click-animation 0.6s ease-in-out;
+}
+
+
+@keyframes mouse-click-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
 
 
 /* Alleen voor mobiele apparaten */
@@ -437,5 +464,4 @@ button:hover {
     margin-bottom: 1.5rem; 
   }
 }
-
 
