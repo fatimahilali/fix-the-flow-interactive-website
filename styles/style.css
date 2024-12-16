@@ -57,6 +57,134 @@
   }
 
 
+
+
+
+
+/* De hoofdcontainer voor de navigatiebalk */
+.navbar {
+  display: flex; /* Zorgt voor een flexibele layout */
+  justify-content: space-between; /* Verspreidt inhoud gelijkmatig aan beide zijden */
+  align-items: center; /* Centreert items verticaal */
+  background-color: var(--black); /* Donkere achtergrond */
+  color: var(--white); /* Witte tekstkleur voor hoog contrast */
+  padding: 1rem 2rem; /* Binnenruimte voor de navbar */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtiele schaduw voor diepte */
+}
+
+/* Linkerkant van de navigatiebalk, bevat datum en andere elementen */
+.navbar-left {
+  display: flex; /* Flexibele layout */
+  align-items: center; /* Centreert items verticaal */
+  gap: 1.25rem; /* Ruimte tussen de elementen */
+}
+
+/* Sectie voor het weergeven van de datum */
+.date-section {
+  display: flex; /* Flexibele layout */
+  flex-direction: column; /* Plaatst datum en subtitel onder elkaar */
+}
+
+.date-section .date {
+  font-size: var(--font-size-meta); /* Tekstgrootte volgens de stijlgids */
+  font-weight: bold; /* Zorgt voor vetgedrukte tekst */
+  color: var(--white); /* Witte tekstkleur voor hoog contrast */
+  margin-bottom: 0.5rem; /* Ruimte onder de datum */
+}
+
+.date-section .subtitle {
+  font-size: var(--font-size-meta); /* Gebruik meta-tekstgrootte */
+  color: var(--grey); /* Gebruik grijstint voor minder opvallende tekst */
+}
+
+/* Sectie die iconen en teksten bevat */
+.icons {
+  display: flex; /* Flexibele layout */
+  gap: 1rem; /* Ruimte tussen de iconen */
+}
+
+/* Layout voor een icoon en de bijbehorende tekst */
+.icon-text {
+  display: flex; /* Plaatst icoon en tekst naast elkaar */
+  align-items: center; /* Centreert ze verticaal */
+  gap: 0.5rem; /* Ruimte tussen het icoon en de tekst */
+  font-size: var(--font-size-text); /* Tekstgrootte volgens de stijlgids */
+}
+
+.icon {
+  width: 1.2rem; /* Breedte van het icoon */
+  height: 1.2rem; /* Hoogte van het icoon */
+  fill: var(--primary-color-accent); /* Accentkleur voor iconen */
+}
+
+/* Rechterkant van de navigatiebalk met links */
+.navbar-right {
+  display: flex; /* Flexibele layout */
+  align-items: center; /* Centreert items verticaal */
+  gap: 1.25rem; /* Ruimte tussen de links */
+}
+
+/* Styling voor de links in de rechterkant van de navbar */
+.navbar-right a {
+  color: var(--white); /* Witte tekstkleur voor hoog contrast */
+  text-decoration: none; /* Verwijdert onderlijning */
+  font-size: var(--font-size-text); /* Gebruik standaard tekstgrootte */
+  font-weight: 500; /* Iets vetgedrukter voor leesbaarheid */
+  transition: color 0.3s ease; /* Voegt een kleurtransitie toe bij hover */
+}
+
+/* Hover-effect voor de links */
+.navbar-right a:hover {
+  color: var(--primary-color); /* Verander de kleur naar primaire kleur bij hover */
+}
+
+/* Mobiele Responsiviteit */
+@media (max-width: 768px) {
+  .navbar {
+      flex-direction: column; /* Plaats items onder elkaar */
+      align-items: flex-start; /* Align naar links voor een betere mobiele layout */
+      padding: 1rem; /* Minder padding op mobiel */
+  }
+
+  .navbar-left {
+      margin-bottom: 1rem; /* Ruimte onder de linkerkant */
+  }
+
+  .navbar-right a {
+      font-size: var(--font-size-meta); /* Maak tekst kleiner op mobiele apparaten */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+      justify-content: center; /* Centreer de inhoud op zeer kleine schermen */
+  }
+
+  .navbar-left {
+      display: none; /* Verberg linkerkant om ruimte te besparen */
+  }
+}
+
+
+/* Container voor het logo onder de navigatie */
+.logo-container {
+  display: flex; /* Maakt de container een flexibele box voor eenvoudige uitlijning */
+  justify-content: center; /* Centreert het logo horizontaal in de container */
+  margin: 2rem 0; /* Creëert ruimte van 2rem boven en onder de container */
+  padding: 5rem;
+}
+
+.logo {
+  height: 5rem; /* Stelt de vaste hoogte van het logo in voor consistentie */
+  width: auto; /* Zorgt ervoor dat de breedte automatisch wordt aangepast om de aspectratio te behouden */
+}
+
+
+
+
+
+
+
 /* ==== body opmaak van de contactpagina ==== */
 .centered-layout {
   display: flex;
@@ -136,6 +264,8 @@
 #email-details.hidden {
   display: none;
 }
+
+
 
 /* Stijl voor de lijst */
 #email-details ul {
@@ -344,31 +474,59 @@ button:hover {
 
 
 
+
+
 /* Stijl voor de foutmelding van verzending */
 
 /* Algemene stijl voor feedbackmeldingen */
 .feedback {
   display: none; 
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem; 
+  margin-top: 1rem;
+  padding: 1.5rem; /* Meer padding voor elegantere spacing */
+  border-radius: 1rem; /* Zachtere randen */
   font-size: var(--fs-body, 1rem);
   text-align: center;
-  backdrop-filter: blur(5px); 
-  border: 1px solid transparent;
-  animation: fadeIn 0.5s ease-in-out forwards; 
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Subtiele rand in plaats van achtergrondkleur */
+  animation: fadeIn 0.5s ease-in-out forwards;
+  max-width: 350px; /* Iets smallere breedte */
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05); /* Subtiele schaduw voor diepte */
+  background-color: transparent; /* Geen achtergrondkleur */
 }
 
 /* Specifieke stijl voor succesmeldingen */
 .feedback.success {
   color: var(--c-success, #155724);
-  border-color: rgba(21, 87, 36, 0.2);
+  border-color: rgba(21, 87, 36, 0.3); /* Randkleur aangepast voor succes */
 }
+
+/* Smiley met draai- en veeranimatie */
+.feedback.success::before {
+  content: "😊";
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  animation: bounceAndRotate 1.5s ease-in-out infinite;
+}
+
+@keyframes bounceAndRotate {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(10deg);
+  }
+}
+
+
 
 /* Specifieke stijl voor foutmeldingen */
 .feedback.error {
   color: var(--c-error);
   border-color: rgba(114, 28, 36, 0.2);
+  background-color: #fde8e8; /* Lichte foutachtergrondkleur */
 }
 
 /* Fade-in animatie definitie */
@@ -383,29 +541,50 @@ button:hover {
   }
 }
 
-/* Stijl voor de virtuele muis */
-
-.virtual-mouse {
-  position: absolute;
-  width: 2.5em;
-  height: 2.5em;
-  pointer-events: none;
-  z-index: 1000;
-  display: none;
-  transform-origin: center;
-  animation: mouse-click-animation 0.6s ease-in-out;
-}
-
-
-@keyframes mouse-click-animation {
+/* Puls-animatie definitie */
+@keyframes pulse {
   0% {
     transform: scale(1);
   }
   50% {
-    transform: scale(0.9);
+    transform: scale(1.1);
   }
   100% {
     transform: scale(1);
+  }
+}
+
+
+
+/* Stijl voor de virtuele muis */
+
+.virtual-mouse {
+  position: absolute;
+  width: 3em;
+  height: 3em;
+  border: 0.2em solid var(--br-clr);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--c-bg-accent) 40%, transparent 60%);
+  pointer-events: none;
+  z-index: 1000;
+  display: none;
+  transform-origin: center;
+  animation: mouse-glow 1.5s infinite alternate ease-in-out;
+  box-shadow: 0 0 0.5em var(--c-accent), 0 0 1em var(--c-bg-accent);
+  opacity: 0.9;
+}
+
+
+
+ 
+
+/* Glow effect bij beweging */
+@keyframes mouse-glow {
+  0% {
+    box-shadow: 0 0 0.5em var(--c-accent), 0 0 1em var(--c-bg-accent);
+  }
+  100% {
+    box-shadow: 0 0 1em var(--c-accent), 0 0 2em var(--c-bg-accent);
   }
 }
 
@@ -464,4 +643,15 @@ button:hover {
     margin-bottom: 1.5rem; 
   }
 }
+
+li.highlighted {
+  background-color: lightyellow;
+  transition: background-color 0.3s ease;
+}
+
+
+
+
+
+
 
