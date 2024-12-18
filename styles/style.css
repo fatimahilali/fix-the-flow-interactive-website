@@ -447,8 +447,6 @@ button:hover {
   }
 }
 
-
-
 /* Stijl voor de virtuele muis */
 
 .virtual-mouse {
@@ -468,9 +466,6 @@ button:hover {
 }
 
 
-
- 
-
 /* Glow effect bij beweging */
 @keyframes mouse-glow {
   0% {
@@ -480,8 +475,6 @@ button:hover {
     box-shadow: 0 0 1em var(--c-accent), 0 0 2em var(--c-bg-accent);
   }
 }
-
-
 
 
 /* Alleen voor mobiele apparaten */
@@ -541,6 +534,9 @@ li.highlighted {
   background-color: lightyellow;
   transition: background-color 0.3s ease;
 }
+
+
+
 
 
 
